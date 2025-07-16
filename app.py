@@ -78,7 +78,7 @@ injectable_options = sorted([
     "RL", "SOLUMEDROL", "STEMETIL", "THIOSOL", "TRENAXEMIC ACID", "TRIBIVET", "TRAMADOL", "VETALOG",
     "VINCRISTICINE", "VITAMIC C", "VITAMIN K", "XYLAZINE"])
 
-oral_medications_options = sorted([
+oral medications_options = sorted([
     "CK-Reno Feline", "CK-Reno", "Rinonadyl", "Cranbact", "Seveclear", "Pimoben 5/10", "Pimoben 1.25/2.5", "Kardioli",
     "Omnipulse", "Prolivet small", "Prolivet large", "Unomarin", "Ursopet", "Tocerapet", "Ocoxin", "EFA Pet", "Oclapet",
     "Atopivet Oral Suspension", "Atopivet Spot On", "Atosporin 50", "Atosporin 100", "Atosporin Oral Solution",
