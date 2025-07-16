@@ -78,36 +78,6 @@ injectable_options = sorted([
     "RL", "SOLUMEDROL", "STEMETIL", "THIOSOL", "TRENAXEMIC ACID", "TRIBIVET", "TRAMADOL", "VETALOG",
     "VINCRISTICINE", "VITAMIC C", "VITAMIN K", "XYLAZINE"])
 
-oral_medications = sorted([
-    "CK-Reno Feline", "CK-Reno", "Rinonadyl", "Cranbact", "Seveclear", "Pimoben 5/10", "Pimoben 1.25/2.5", "Kardioli",
-    "Omnipulse", "Prolivet small", "Prolivet large", "Unomarin", "Ursopet", "Tocerapet", "Ocoxin", "EFA Pet", "Oclapet",
-    "Atopivet Oral Suspension", "Atopivet Spot On", "Atosporin 50", "Atosporin 100", "Atosporin Oral Solution",
-    "Terbopet 500", "Terbopet 250", "Terbopet-M", "Viv Keto Forte", "Viv Silky Shampoo", "Viv Silky Spray",
-    "Viv Keto", "Pirofur", "Prurigo", "Subavet", "Relaxzyme small", "Relaxzyme large", "Spraid", "Impromune",
-    "Viusid", "Clearify", "Otisoothe", "L-Sametine", "Alzer", "Diamel", "Vet Thyro 0.2", "Vet Thyro 0.6", "Asbrip",
-    "Firotail 227", "Firotail 57", "Cartail 100", "Cartail 50", "Curcupet", "Cartail Spray", "Grapitail",
-    "Entero Chronic", "Haltorin", "Viusid Detox", "Synfosium", "Pancreasolve", "Enterosecure BD", "Carminal",
-    "Black Soldier Protein Powder", "Calowries", "Obex", "Condrovet Puppies", "Condrovet Force HA Large",
-    "Condrovet Force HA", "Folrex", "Kalsis", "Vi Fi Spray", "Vi Fi Forte Spot On", "Exsite Shampoo", "Emepet",
-    "Vet Maro tab", "Veticoal", "Prokolin", "Cephavet", "Aceptor", "Envas", "Carodyl 25 mg", "Carodyl 75 mg",
-    "Carodyl 100mg", "Metaflam 1mg", "Metaflam 5 mg", "Ketochlor", "Lisybin small", "Lisybin medium", "Lisybin Large",
-    "ProviBoost Drops", "ProviBoost Syrup", "Kiwof Plus", "Kiwof Plus XL", "Kiwof Puppy Suspension", "Kiwof cat",
-    "Strongbeat advance", "Vetecto >4-10kg", "Vetecto 10-20 kg", "Vetecto20-40 kg", "Bravecto >4-10 kg",
-    "Bravecto10-20 kg", "Bravecto 20-40 kg", "Bravecto> 40 kg", "Simparica", "Nutricoat Advance small",
-    "Nutricoat Advance large", "Bioclan oral susp", "Bioclan 150 mg", "bioclan 300", "bioclan 600",
-    "Clindapet oral susp", "Clindapet 150mg", "Clindapet 300", "Clindapet 600", "Zedoz 100", "Zedoz oral susp",
-    "Zedoz 200", "Zedox 300", "Metrogyl 200 mg", "metrogyl 400mg", "metrogyl oral susp", "Samepet",
-    "Samepet forte", "Ferritas", "aRBCe pet", "Thrombofit", "Advaplat", "Galibor", "Pronefra", "Cefpet syp",
-    "Cefpet", "Cefpet XL", "Cefpet CLV", "Toxomox syp", "Toxomox 250", "Toxomox 500", "Fiprofort Plus 4-10 kg",
-    "Fiprofort Plus 10-20 kg", "Fiprofort Plus 20-40kg", "Fiprofort Plus >40kg", "Fiprofort Spray", "CaniKuf",
-    "Easibreath", "Otican", "Meo uripet intense", "uripet", "Uripet intense", "Smoothie pet derma", "Afoderm Hemp",
-    "Pawflex", "Petjoint", "Apoquel", "Dermichlor", "Mycosan", "Ophthocare", "Ophthocare cool", "Ophthocare mono",
-    "Ophthocare KT", "Ophthocare PD", "Ophthocare GP", "Ophthocare XT", "Ophthocare HYLO", "Auriko", "Pomisol",
-    "Easotic", "Clearify", "Epiotic", "Ambiflush", "Digyton", "Digyton plus", "Mobility Plus", "Himpyrin",
-    "Reliflam", "Aluspray", "D magg spray", "Diarest Cool", "Guttypet", "Gutwell", "Vendisc", "Poochrix", "Althromb",
-    "E6WASH", "E6 lotion", "Interban", "Interban Maxima", "Interban LC", "Placentrix", "silverex", "Metlicho cat",
-    "Metlicho dog", "Coatex", "Gabapentin 100", "Gabapentin 300"])
-
 with st.form("ipd_form"):
     pet_name = st.text_input("Pet Name")
     pet_id = st.text_input("Pet ID")
