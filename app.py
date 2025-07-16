@@ -50,6 +50,8 @@ def generate_ipd_case_sheet_docx(data):
 
     doc.add_heading("Food Details", level=2)
     doc.add_paragraph(f"{data['food_type']} - {data['food_qty']}")
+    if data['food_type'] == "Other" and data['food_other']:
+        doc.add_paragraph(f"Other Food Specified: {data['food_other']}")
 
     doc.add_heading("Emergency / Remarks", level=2)
     doc.add_paragraph(data['remarks'])
@@ -97,10 +99,9 @@ with st.form("ipd_form"):
     st.subheader("Food Details")
     food_options = ["Vivaldis Recovery Diet", "Vivaldis Dog GI", "Vivaldis Cat GI", "Other"]
     selected_food = st.selectbox("Type of Food", options=food_options)
+    food_other = ""
     if selected_food == "Other":
-        food_type = st.text_input("Specify Other Food")
-    else:
-        food_type = selected_food
+        food_other = st.text_input("Specify Other Food")
     food_qty = st.text_input("Quantity")
 
     st.subheader("Emergency / Remarks")
@@ -124,7 +125,8 @@ if submitted:
         "time": time,
         "injectables": injectables,
         "orals": orals,
-        "food_type": food_type,
+        "food_type": selected_food,
+        "food_other": food_other,
         "food_qty": food_qty,
         "remarks": remarks,
         "temp": temp,
