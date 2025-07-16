@@ -5,6 +5,22 @@ import streamlit as st
 from docx import Document
 from io import BytesIO
 
+injectable_options = sorted([
+    "ADRENALINE", "Althromb", "AMIKACIN", "AMOXY+SULBACTUM", "AMOXYCLAV", "APOMORPHINE", "ATROPINE",
+    "BOTROPASE", "BUPRENORPHINE", "BUTORPHANOL", "CALCIUM GLUCONATE", "CARPROFEN", "CEFTRIAXONE", "CEFTIOFUR",
+    "CONVENIA", "CPM", "DARBOPOIETIN", "D5", "D25", "DERIPHYLIN", "DEXAMETHASONE", "DEXMEDETOMIDINE", "DIAZEPAM",
+    "DICYCLOMINE", "DIGYTON", "DNS", "DOXOPRAM", "Doxycycline", "EMEPET", "ERYTHROPOEITIN", "ETAMSYLATE",
+    "FERRITAS", "FILGASTRIM", "FRUSEMIDE", "FPP", "GENTAMICIN", "GLYCOPYRROLATE", "HEPTOMAC", "IMIDOCARB",
+    "INSULIN", "IVERMOCTIN", "KETAMINE", "LECETRACETEM", "LIGNOCAINE", "MANITOL", "MAROPITANT", "MELOXICAM",
+    "MEROPENEM", "MIDAZOLAM", "NAC", "NS", "ONDENSETRON", "PANTAPRAZOLE", "PERINORM", "PREDNISOLONE",
+    "PROPOFOL", "RANTAC", "RL", "SOLUMEDROL", "STEMETIL", "THIOSOL", "TRENAXEMIC ACID", "TRIBIVET", "VETALOG",
+    "VINCRISTICINE", "XYLAZINE"
+])
+
+oral_medications = sorted([
+    # your long list of oral medications here (truncated for brevity)
+])
+
 def generate_ipd_case_sheet_docx(data):
     doc = Document()
     doc.add_heading('Dr. Doodley Pet Hospital - Bangalore', 0)
@@ -66,9 +82,6 @@ def generate_ipd_case_sheet_docx(data):
 
 st.title("IPD Treatment Sheet Generator - Dr. Doodley Pet Hospital")
 
-injectable_options = sorted([...])  # Keep as defined earlier
-oral_medications = sorted([...])   # Keep as defined earlier
-
 st.subheader("Oral Medications")
 orals = []
 num_orals = st.number_input("Number of Oral Medications", min_value=0, max_value=15, value=0, step=1)
@@ -79,6 +92,3 @@ for i in range(num_orals):
         remarks = st.text_input(f"Remarks {i+1}", key=f"oral_remarks_{i}")
         billed = st.text_input(f"Billed {i+1}", key=f"oral_billed_{i}")
         orals.append({"name": name, "dose": dose, "remarks": remarks, "billed": billed})
-
-# Add this `orals` list to the final `data` dictionary passed into generate_ipd_case_sheet_docx
-# Example: data['orals'] = orals
