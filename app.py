@@ -78,7 +78,6 @@ injectable_options = sorted([
     "RL", "SOLUMEDROL", "STEMETIL", "THIOSOL", "TRENAXEMIC ACID", "TRIBIVET", "TRAMADOL", "VETALOG",
     "VINCRISTICINE", "VITAMIC C", "VITAMIN K", "XYLAZINE"])
 
-# Load oral medications from a separate list and sort it alphabetically
 oral_medications = sorted([
     "CK-Reno Feline", "CK-Reno", "Rinonadyl", "Cranbact", "Seveclear", "Pimoben 5/10", "Pimoben 1.25/2.5", "Kardioli",
     "Omnipulse", "Prolivet small", "Prolivet large", "Unomarin", "Ursopet", "Tocerapet", "Ocoxin", "EFA Pet", "Oclapet",
@@ -96,8 +95,8 @@ oral_medications = sorted([
     "Strongbeat advance", "Vetecto >4-10kg", "Vetecto 10-20 kg", "Vetecto20-40 kg", "Bravecto >4-10 kg",
     "Bravecto10-20 kg", "Bravecto 20-40 kg", "Bravecto> 40 kg", "Simparica", "Nutricoat Advance small",
     "Nutricoat Advance large", "Bioclan oral susp", "Bioclan 150 mg", "bioclan 300", "bioclan 600",
-    "Clindapet oral susp", "Clindapet 150mg", "Clindapet 300", "Clindapet 600", "Zedox 100", "Zedox oral susp",
-    "Zedox 200", "Zedox 300", "Metrogyl 200 mg", "metrogyl 400mg", "metrogyl oral susp", "Samepet",
+    "Clindapet oral susp", "Clindapet 150mg", "Clindapet 300", "Clindapet 600", "Zedoz 100", "Zedoz oral susp",
+    "Zedoz 200", "Zedox 300", "Metrogyl 200 mg", "metrogyl 400mg", "metrogyl oral susp", "Samepet",
     "Samepet forte", "Ferritas", "aRBCe pet", "Thrombofit", "Advaplat", "Galibor", "Pronefra", "Cefpet syp",
     "Cefpet", "Cefpet XL", "Cefpet CLV", "Toxomox syp", "Toxomox 250", "Toxomox 500", "Fiprofort Plus 4-10 kg",
     "Fiprofort Plus 10-20 kg", "Fiprofort Plus 20-40kg", "Fiprofort Plus >40kg", "Fiprofort Spray", "CaniKuf",
@@ -109,6 +108,3 @@ oral_medications = sorted([
     "E6WASH", "E6 lotion", "Interban", "Interban Maxima", "Interban LC", "Placentrix", "silverex", "Metlicho cat",
     "Metlicho dog", "Coatex", "Gabapentin 100", "Gabapentin 300"])
 
-# Alphabetically sorted oral_medications list loaded above
-
-# You can now update the user interface to use the oral_medications dropdown instead of free text.
