@@ -131,7 +131,7 @@ with st.form("ipd_form"):
     st.subheader("Oral Medications")
     for i in range(1, 4):
         with st.expander(f"Oral Med {i}"):
-            name = st.text_input(f"Oral Name {i}", options=[""] + oral_medications_options, key=f"oral_name_{i}")
+            name = st.text_input(f"Oral Name {i}", options=[""] + oral_medications, key=f"oral_name_{i}")
             dose = st.text_input(f"Dose {i}", key=f"oral_dose_{i}")
             remarks = st.text_input(f"Remarks {i}", key=f"oral_remarks_{i}")
             billed = st.text_input(f"Billed {i}", key=f"oral_billed_{i}")
