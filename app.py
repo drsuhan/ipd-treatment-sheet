@@ -78,6 +78,36 @@ injectable_options = sorted([
     "RL", "SOLUMEDROL", "STEMETIL", "THIOSOL", "TRENAXEMIC ACID", "TRIBIVET", "TRAMADOL", "VETALOG",
     "VINCRISTICINE", "VITAMIC C", "VITAMIN K", "XYLAZINE"])
 
+oral_medications = sorted([
+    "Advaplat", "Afoderm Hemp", "Althromb", "Aluspray", "Ambiflush", "Apoquel", "Aceptor", "Asbrip",
+    "Atopivet Oral Suspension", "Atopivet Spot On", "Atosporin 100", "Atosporin 50", "Atosporin Oral Solution",
+    "Bioclan 150 mg", "Bioclan 300", "Bioclan 600", "Bioclan oral susp", "Black Soldier Protein Powder",
+    "Bravecto 10-20 kg", "Bravecto 20-40 kg", "Bravecto >40 kg", "Bravecto >4-10 kg", "Calowries",
+    "CaniKuf", "Carodyl 100mg", "Carodyl 25 mg", "Carodyl 75 mg", "Cartail 100", "Cartail 50",
+    "Cartail Spray", "Cephavet", "Cefpet", "Cefpet CLV", "Cefpet XL", "Cefpet syp", "CK-Reno", "CK-Reno Feline",
+    "Clearify", "Clindapet 150mg", "Clindapet 300", "Clindapet 600", "Clindapet oral susp", "Condrovet Force HA",
+    "Condrovet Force HA Large", "Condrovet Puppies", "Curcupet", "D magg spray", "Diamel", "Dermichlor",
+    "Digyton", "Digyton plus", "Diarest Cool", "Emepet", "Entero Chronic", "Enterosecure BD", "E6 lotion",
+    "E6WASH", "Easibreath", "Easotic", "EFA Pet", "Envas", "Exsite Shampoo", "Ferrotras", "Fiprofort Plus 10-20 kg",
+    "Fiprofort Plus 20-40kg", "Fiprofort Plus 4-10 kg", "Fiprofort Plus >40kg", "Fiprofort Spray", "Firotail 227",
+    "Firotail 57", "Folrex", "Gabapentin 100", "Gabapentin 300", "Galibor", "Grapitail", "Guttypet", "Gutwell",
+    "Haltorin", "Himpyrin", "Impromune", "Interban", "Interban LC", "Interban Maxima", "Kiwof Plus",
+    "Kiwof Plus XL", "Kiwof Puppy Suspension", "Kiwof cat", "Kalsis", "Ketochlor", "L-Sametine", "Lisybin Large",
+    "Lisybin medium", "Lisybin small", "Metaflam 1mg", "Metaflam 5 mg", "Metlicho cat", "Metlicho dog",
+    "Metrogyl 200 mg", "Metrogyl 400mg", "Metrogyl oral susp", "Mobility Plus", "Mycosan", "Nutricoat Advance large",
+    "Nutricoat Advance small", "Obex", "Oclapet", "Ocoxin", "Ophthocare", "Ophthocare COOL", "Ophthocare GP",
+    "Ophthocare HYLO", "Ophthocare KT", "Ophthocare MONO", "Ophthocare PD", "Ophthocare XT", "Oripet", "Otican",
+    "Otisoothe", "Pancreasolve", "Pawflex", "Petjoint", "Pimoben 1.25/2.5", "Pimoben 5/10", "Placentrex", "Pomisol",
+    "Pronefra", "Prokolin", "Prolivet large", "Prolivet small", "ProviBoost Drops", "ProviBoost Syrup", "Prurigo",
+    "Poochrix", "Relaxzyme large", "Relaxzyme small", "Reliflam", "Rinonadyl", "Samepet", "Samepet forte",
+    "Seveclear", "Simparica", "Smoothie pet derma", "Spraid", "Stemefit", "Strongbeat advance", "Subavet",
+    "Synfosium", "Terbopet 250", "Terbopet 500", "Terbopet-M", "Thrombofit", "Tocerapet", "Toxomox 250",
+    "Toxomox 500", "Toxomox syp", "Uripet", "Uripet intense", "Ursopet", "Vet Maro tab", "Vet Thyro 0.2",
+    "Vet Thyro 0.6", "Veticoal", "Vetecto 10-20 kg", "Vetecto 20-40 kg", "Vetecto >4-10kg", "Vi Fi Forte Spot On",
+    "Vi Fi Spray", "Viusid", "Viusid Detox", "Viv Keto", "Viv Keto Forte", "Viv Silky Shampoo", "Viv Silky Spray",
+    "Vivaldis Cat gi", "Vivaldis Dog GI", "Vivaldis recovery diet", "Zedoz 100", "Zedoz 200", "Zedoz oral susp",
+    "Zedoz 300"])
+
 with st.form("ipd_form"):
     pet_name = st.text_input("Pet Name")
     pet_id = st.text_input("Pet ID")
@@ -88,7 +118,7 @@ with st.form("ipd_form"):
     st.subheader("Current Treatment - Injectables")
     for i in range(1, 6):
         with st.expander(f"Injectable {i}"):
-            name = st.selectbox(f"Name {i}", options=[""] + injectable_options, key=f"inj_name_{i}")
+            name = st.selectbox(f"Name {i}", options=[""] + oral_medications, key=f"inj_name_{i}")
             route = st.text_input(f"Route {i}", key=f"inj_route_{i}")
             ml = st.text_input(f"ml {i}", key=f"inj_ml_{i}")
             dose = st.text_input(f"Dose {i}", key=f"inj_dose_{i}")
@@ -101,7 +131,7 @@ with st.form("ipd_form"):
     st.subheader("Oral Medications")
     for i in range(1, 4):
         with st.expander(f"Oral Med {i}"):
-            name = st.text_input(f"Oral Name {i}", key=f"oral_name_{i}")
+            name = st.text_input(f"Oral Name {i}", options=[""] + injectable_options, key=f"oral_name_{i}")
             dose = st.text_input(f"Dose {i}", key=f"oral_dose_{i}")
             remarks = st.text_input(f"Remarks {i}", key=f"oral_remarks_{i}")
             billed = st.text_input(f"Billed {i}", key=f"oral_billed_{i}")
