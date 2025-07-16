@@ -51,7 +51,7 @@ def generate_ipd_case_sheet_docx(data):
     doc.add_heading("Food Details", level=2)
     doc.add_paragraph(f"{data['food_type']} - {data['food_qty']}")
     if data['food_type'] == "Other" and data['food_other']:
-        doc.add_paragraph(f"Other Food Specified: {data['food_other']}")
+        doc.add_paragraph(f"Other Food Details: {data['food_other']}")
 
     doc.add_heading("Emergency / Remarks", level=2)
     doc.add_paragraph(data['remarks'])
@@ -81,7 +81,7 @@ with st.form("ipd_form"):
             ml = st.text_input(f"ml {i}", key=f"inj_ml_{i}")
             dose = st.text_input(f"Dose {i}", key=f"inj_dose_{i}")
             remarks = st.text_input(f"Remarks {i}", key=f"inj_remark_{i}")
-            billed = st.selectbox(f"Billed {i}", ["Yes", "No"], key=f"inj_billed_{i}")
+            billed = st.text_input(f"Billed {i}", key=f"inj_billed_{i}")
             if name:
                 injectables.append({"name": name, "route": route, "ml": ml, "dose": dose, "remarks": remarks, "billed": billed})
 
@@ -92,7 +92,7 @@ with st.form("ipd_form"):
             name = st.text_input(f"Oral Name {i}", key=f"oral_name_{i}")
             dose = st.text_input(f"Dose {i}", key=f"oral_dose_{i}")
             remarks = st.text_input(f"Remarks {i}", key=f"oral_remarks_{i}")
-            billed = st.selectbox(f"Billed {i}", ["Yes", "No"], key=f"oral_billed_{i}")
+            billed = st.text_input(f"Billed {i}", key=f"oral_billed_{i}")
             if name:
                 orals.append({"name": name, "dose": dose, "remarks": remarks, "billed": billed})
 
