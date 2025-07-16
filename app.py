@@ -118,7 +118,7 @@ with st.form("ipd_form"):
     st.subheader("Current Treatment - Injectables")
     for i in range(1, 6):
         with st.expander(f"Injectable {i}"):
-            name = st.selectbox(f"Name {i}", options=[""] + oral_medications, key=f"inj_name_{i}")
+            name = st.selectbox(f"Name {i}", options=[""] + injectable_options, key=f"inj_name_{i}")
             route = st.text_input(f"Route {i}", key=f"inj_route_{i}")
             ml = st.text_input(f"ml {i}", key=f"inj_ml_{i}")
             dose = st.text_input(f"Dose {i}", key=f"inj_dose_{i}")
@@ -131,7 +131,7 @@ with st.form("ipd_form"):
     st.subheader("Oral Medications")
     for i in range(1, 4):
         with st.expander(f"Oral Med {i}"):
-            name = st.text_input(f"Oral Name {i}", options=[""] + injectable_options, key=f"oral_name_{i}")
+            name = st.text_input(f"Oral Name {i}", options=[""] + oral_medications_options, key=f"oral_name_{i}")
             dose = st.text_input(f"Dose {i}", key=f"oral_dose_{i}")
             remarks = st.text_input(f"Remarks {i}", key=f"oral_remarks_{i}")
             billed = st.text_input(f"Billed {i}", key=f"oral_billed_{i}")
