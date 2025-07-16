@@ -49,14 +49,7 @@ def generate_ipd_case_sheet_docx(data):
         row[4].text = item['billed']
 
     doc.add_heading("Food Details", level=2)
-    table = doc.add_table(rows=1, cols=2)
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = 'Type of Food'
-    hdr_cells[1].text = 'Remarks'
-    for food in data['food']:
-        row = table.add_row().cells
-        row[0].text = food['type']
-        row[1].text = food['remarks']
+    doc.add_paragraph(f"{data['food_type']} - {data['food_qty']}")
 
     doc.add_heading("Emergency / Remarks", level=2)
     doc.add_paragraph(data['remarks'])
@@ -101,14 +94,14 @@ with st.form("ipd_form"):
             if name:
                 orals.append({"name": name, "dose": dose, "remarks": remarks, "billed": billed})
 
-    food = []
     st.subheader("Food Details")
-    for i in range(1, 3):
-        with st.expander(f"Food {i}"):
-            type_ = st.text_input(f"Type of Food {i}", key=f"food_type_{i}")
-            remarks = st.text_input(f"Remarks {i}", key=f"food_remark_{i}")
-            if type_:
-                food.append({"type": type_, "remarks": remarks})
+    food_options = ["Vivaldis Recovery Diet", "Vivaldis Dog GI", "Vivaldis Cat GI", "Other"]
+    selected_food = st.selectbox("Type of Food", options=food_options)
+    if selected_food == "Other":
+        food_type = st.text_input("Specify Other Food")
+    else:
+        food_type = selected_food
+    food_qty = st.text_input("Quantity")
 
     st.subheader("Emergency / Remarks")
     remarks = st.text_area("Remarks")
@@ -131,7 +124,8 @@ if submitted:
         "time": time,
         "injectables": injectables,
         "orals": orals,
-        "food": food,
+        "food_type": food_type,
+        "food_qty": food_qty,
         "remarks": remarks,
         "temp": temp,
         "crt": crt,
