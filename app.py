@@ -88,7 +88,11 @@ with st.form("ipd_form"):
     st.subheader("Current Treatment - Injectables")
     for i in range(1, 6):
         with st.expander(f"Injectable {i}"):
-            name = st.selectbox(f"Name {i}", options=[""] + injectable_options, key=f"inj_name_{i}")
+            inject_name_mode = st.radio(f"Injectable {i} Input Type", ["Select", "Type"], key=f"mode_{i}")
+            if inject_name_mode == "Select":
+                name = st.selectbox(f"Name {i}", options=[""] + injectable_options, key=f"inj_name_{i}")
+            else:
+                name = st.text_input(f"Name {i}", key=f"inj_text_{i}")
             route = st.text_input(f"Route {i}", key=f"inj_route_{i}")
             ml = st.text_input(f"ml {i}", key=f"inj_ml_{i}")
             dose = st.text_input(f"Dose {i}", key=f"inj_dose_{i}")
