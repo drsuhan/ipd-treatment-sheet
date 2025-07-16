@@ -5,22 +5,6 @@ import streamlit as st
 from docx import Document
 from io import BytesIO
 
-injectable_options = sorted([
-    "ADRENALINE", "Althromb", "AMIKACIN", "AMOXY+SULBACTUM", "AMOXYCLAV", "APOMORPHINE", "ATROPINE",
-    "BOTROPASE", "BUPRENORPHINE", "BUTORPHANOL", "CALCIUM GLUCONATE", "CARPROFEN", "CEFTRIAXONE", "CEFTIOFUR",
-    "CONVENIA", "CPM", "DARBOPOIETIN", "D5", "D25", "DERIPHYLIN", "DEXAMETHASONE", "DEXMEDETOMIDINE", "DIAZEPAM",
-    "DICYCLOMINE", "DIGYTON", "DNS", "DOXOPRAM", "Doxycycline", "EMEPET", "ERYTHROPOEITIN", "ETAMSYLATE",
-    "FERRITAS", "FILGASTRIM", "FRUSEMIDE", "FPP", "GENTAMICIN", "GLYCOPYRROLATE", "HEPTOMAC", "IMIDOCARB",
-    "INSULIN", "IVERMOCTIN", "KETAMINE", "LECETRACETEM", "LIGNOCAINE", "MANITOL", "MAROPITANT", "MELOXICAM",
-    "MEROPENEM", "MIDAZOLAM", "NAC", "NS", "ONDENSETRON", "PANTAPRAZOLE", "PERINORM", "PREDNISOLONE",
-    "PROPOFOL", "RANTAC", "RL", "SOLUMEDROL", "STEMETIL", "THIOSOL", "TRENAXEMIC ACID", "TRIBIVET", "VETALOG",
-    "VINCRISTICINE", "XYLAZINE"
-])
-
-oral_medications = sorted([
-    # your long list of oral medications here (truncated for brevity)
-])
-
 def generate_ipd_case_sheet_docx(data):
     doc = Document()
     doc.add_heading('Dr. Doodley Pet Hospital - Bangalore', 0)
@@ -82,13 +66,49 @@ def generate_ipd_case_sheet_docx(data):
 
 st.title("IPD Treatment Sheet Generator - Dr. Doodley Pet Hospital")
 
-st.subheader("Oral Medications")
-orals = []
-num_orals = st.number_input("Number of Oral Medications", min_value=0, max_value=15, value=0, step=1)
-for i in range(num_orals):
-    with st.expander(f"Oral Medication {i+1}"):
-        name = st.selectbox(f"Name {i+1}", options=[""] + oral_medications, key=f"oral_name_{i}")
-        dose = st.text_input(f"Dose {i+1}", key=f"oral_dose_{i}")
-        remarks = st.text_input(f"Remarks {i+1}", key=f"oral_remarks_{i}")
-        billed = st.text_input(f"Billed {i+1}", key=f"oral_billed_{i}")
-        orals.append({"name": name, "dose": dose, "remarks": remarks, "billed": billed})
+injectable_options = sorted([
+    "ADRENALINE", "AMIKACIN", "AMOXY+SULBACTUM", "AMOXYCLAV", "APOMORPHINE", "ATROPINE", "AVIL",
+    "BOTROPASE", "BUPRENORPHINE", "CALCIUM GLUCONATE", "CARPROFEN", "CEFTRIAXONE", "CEFTIOFUR",
+    "CLINDAMYCIN", "CONVENIA", "CPM", "CYCLOPHOSPHAMIDE", "DARBOPOIETIN", "D5", "D25", "DEXAMETHASONE",
+    "DEXMEDETOMIDINE", "DIAZEPAM", "DICYCLOMINE", "DERIPHYLIN", "DNS", "DOXOPRAM", "DOXYCYCLINE",
+    "ETAMSYLATE", "ERYTHROPOIETIN", "FILGASTRIM", "FLUNIXIN", "FPP", "FRUSEMIDE", "GENTAMICIN",
+    "GLYCOPYRROLATE", "HEPTOMAC", "IMIDOCARB", "INSULIN", "IVER MECTIN", "KETAMINE", "LEVERTRACETEM",
+    "LIGNOCAINE", "MANNITOL", "MAROPITANT", "MELOXICAM", "MEROPENEM", "MIDAZOLAM", "METRIS", "NAC",
+    "NER VIGEN", "NS", "ONDENSETRON", "PANTAPRAZOLE", "PERINORM", "PREDNISOLONE", "PROPOFOL", "RANTAC",
+    "RL", "SOLUMEDROL", "STEMETIL", "THIOSOL", "TRENAXEMIC ACID", "TRIBIVET", "TRAMADOL", "VETALOG",
+    "VINCRISTICINE", "VITAMIC C", "VITAMIN K", "XYLAZINE"])
+
+# Load oral medications from a separate list and sort it alphabetically
+oral_medications = sorted([
+    "CK-Reno Feline", "CK-Reno", "Rinonadyl", "Cranbact", "Seveclear", "Pimoben 5/10", "Pimoben 1.25/2.5", "Kardioli",
+    "Omnipulse", "Prolivet small", "Prolivet large", "Unomarin", "Ursopet", "Tocerapet", "Ocoxin", "EFA Pet", "Oclapet",
+    "Atopivet Oral Suspension", "Atopivet Spot On", "Atosporin 50", "Atosporin 100", "Atosporin Oral Solution",
+    "Terbopet 500", "Terbopet 250", "Terbopet-M", "Viv Keto Forte", "Viv Silky Shampoo", "Viv Silky Spray",
+    "Viv Keto", "Pirofur", "Prurigo", "Subavet", "Relaxzyme small", "Relaxzyme large", "Spraid", "Impromune",
+    "Viusid", "Clearify", "Otisoothe", "L-Sametine", "Alzer", "Diamel", "Vet Thyro 0.2", "Vet Thyro 0.6", "Asbrip",
+    "Firotail 227", "Firotail 57", "Cartail 100", "Cartail 50", "Curcupet", "Cartail Spray", "Grapitail",
+    "Entero Chronic", "Haltorin", "Viusid Detox", "Synfosium", "Pancreasolve", "Enterosecure BD", "Carminal",
+    "Black Soldier Protein Powder", "Calowries", "Obex", "Condrovet Puppies", "Condrovet Force HA Large",
+    "Condrovet Force HA", "Folrex", "Kalsis", "Vi Fi Spray", "Vi Fi Forte Spot On", "Exsite Shampoo", "Emepet",
+    "Vet Maro tab", "Veticoal", "Prokolin", "Cephavet", "Aceptor", "Envas", "Carodyl 25 mg", "Carodyl 75 mg",
+    "Carodyl 100mg", "Metaflam 1mg", "Metaflam 5 mg", "Ketochlor", "Lisybin small", "Lisybin medium", "Lisybin Large",
+    "ProviBoost Drops", "ProviBoost Syrup", "Kiwof Plus", "Kiwof Plus XL", "Kiwof Puppy Suspension", "Kiwof cat",
+    "Strongbeat advance", "Vetecto >4-10kg", "Vetecto 10-20 kg", "Vetecto20-40 kg", "Bravecto >4-10 kg",
+    "Bravecto10-20 kg", "Bravecto 20-40 kg", "Bravecto> 40 kg", "Simparica", "Nutricoat Advance small",
+    "Nutricoat Advance large", "Bioclan oral susp", "Bioclan 150 mg", "bioclan 300", "bioclan 600",
+    "Clindapet oral susp", "Clindapet 150mg", "Clindapet 300", "Clindapet 600", "Zedox 100", "Zedox oral susp",
+    "Zedox 200", "Zedox 300", "Metrogyl 200 mg", "metrogyl 400mg", "metrogyl oral susp", "Samepet",
+    "Samepet forte", "Ferritas", "aRBCe pet", "Thrombofit", "Advaplat", "Galibor", "Pronefra", "Cefpet syp",
+    "Cefpet", "Cefpet XL", "Cefpet CLV", "Toxomox syp", "Toxomox 250", "Toxomox 500", "Fiprofort Plus 4-10 kg",
+    "Fiprofort Plus 10-20 kg", "Fiprofort Plus 20-40kg", "Fiprofort Plus >40kg", "Fiprofort Spray", "CaniKuf",
+    "Easibreath", "Otican", "Meo uripet intense", "uripet", "Uripet intense", "Smoothie pet derma", "Afoderm Hemp",
+    "Pawflex", "Petjoint", "Apoquel", "Dermichlor", "Mycosan", "Ophthocare", "Ophthocare cool", "Ophthocare mono",
+    "Ophthocare KT", "Ophthocare PD", "Ophthocare GP", "Ophthocare XT", "Ophthocare HYLO", "Auriko", "Pomisol",
+    "Easotic", "Clearify", "Epiotic", "Ambiflush", "Digyton", "Digyton plus", "Mobility Plus", "Himpyrin",
+    "Reliflam", "Aluspray", "D magg spray", "Diarest Cool", "Guttypet", "Gutwell", "Vendisc", "Poochrix", "Althromb",
+    "E6WASH", "E6 lotion", "Interban", "Interban Maxima", "Interban LC", "Placentrix", "silverex", "Metlicho cat",
+    "Metlicho dog", "Coatex", "Gabapentin 100", "Gabapentin 300"])
+
+# Alphabetically sorted oral_medications list loaded above
+
+# You can now update the user interface to use the oral_medications dropdown instead of free text.
