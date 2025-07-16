@@ -1,108 +1,151 @@
+# IPD Case Sheet Generator Web Interface for Dr. Doodley Pet Hospital
+
+import datetime
 import streamlit as st
 from docx import Document
 from io import BytesIO
-import datetime
 
-def create_treatment_sheet(data):
+def generate_ipd_case_sheet_docx(data):
     doc = Document()
-    doc.add_heading("Dr. Doodley Pet Hospital - Bangalore", 0)
-    doc.add_paragraph(f"Pet Name: {data['pet_name']}       Pet ID: {data['pet_id']}")
-    doc.add_paragraph(f"Date: {data['date']}       Time of Treatment: {data['time']}")
-    doc.add_paragraph("")
+    doc.add_heading('Dr. Doodley Pet Hospital - Bangalore', 0)
 
-    def add_section(title, cols, rows):
-        doc.add_heading(title, level=1)
-        table = doc.add_table(rows=1, cols=len(cols))
-        for idx, col in enumerate(cols):
-            table.rows[0].cells[idx].text = col
-        for r in rows:
-            row_cells = table.add_row().cells
-            for idx, col in enumerate(cols):
-                row_cells[idx].text = r.get(col.lower(), "")
-        doc.add_paragraph("")
+    doc.add_paragraph(f"Pet Name: {data['pet_name']}     Pet ID: {data['pet_id']}")
+    doc.add_paragraph(f"Date: {data['date']}     Time of Treatment: {data['time']}")
 
-    add_section("Current Treatment Details",
-                ["#", "Name", "Route", "ml", "Dose", "Remarks", "Billed"],
-                [{k: v for k, v in zip(["#", "Name", "Route", "ml", "Dose", "Remarks", "Billed"], [str(i+1), d['name'], d['route'], d['ml'], d['dose'], d['remarks'], d['billed']])} for i, d in enumerate(data['injectables'])])
+    doc.add_heading("Current Treatment Details", level=2)
+    table = doc.add_table(rows=1, cols=7)
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = '#'
+    hdr_cells[1].text = 'Name'
+    hdr_cells[2].text = 'Route'
+    hdr_cells[3].text = 'ml'
+    hdr_cells[4].text = 'Dose'
+    hdr_cells[5].text = 'Remarks'
+    hdr_cells[6].text = 'Billed'
+    for i, item in enumerate(data['injectables'], 1):
+        row = table.add_row().cells
+        row[0].text = str(i)
+        row[1].text = item['name']
+        row[2].text = item['route']
+        row[3].text = item['ml']
+        row[4].text = item['dose']
+        row[5].text = item['remarks']
+        row[6].text = item['billed']
 
-    add_section("Oral Medications",
-                ["#", "Name", "Dose", "Remarks", "Billed"],
-                [{k: v for k, v in zip(["#", "Name", "Dose", "Remarks", "Billed"], [str(i+1), d['name'], d['dose'], d['remarks'], d['billed']])} for i, d in enumerate(data['oral_meds'])])
+    doc.add_heading("Oral Medications", level=2)
+    table = doc.add_table(rows=1, cols=5)
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = '#'
+    hdr_cells[1].text = 'Name'
+    hdr_cells[2].text = 'Dose'
+    hdr_cells[3].text = 'Remarks'
+    hdr_cells[4].text = 'Billed'
+    for i, item in enumerate(data['orals'], 1):
+        row = table.add_row().cells
+        row[0].text = str(i)
+        row[1].text = item['name']
+        row[2].text = item['dose']
+        row[3].text = item['remarks']
+        row[4].text = item['billed']
 
-    add_section("Food Details",
-                ["Type of Food", "Quantity", "Remarks"],
-                data['food'])
+    doc.add_heading("Food Details", level=2)
+    table = doc.add_table(rows=1, cols=2)
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = 'Type of Food'
+    hdr_cells[1].text = 'Remarks'
+    for food in data['food']:
+        row = table.add_row().cells
+        row[0].text = food['type']
+        row[1].text = food['remarks']
 
-    add_section("Emergency Treatments",
-                ["Name", "Dose", "Remarks", "Billed"],
-                data['emergency'])
-
-    doc.add_heading("General Notes / Observations", level=1)
+    doc.add_heading("Emergency / Remarks", level=2)
     doc.add_paragraph(data['remarks'])
-    doc.add_paragraph("")
-    doc.add_paragraph(f"Temp: {data['temp']}    CRT: {data['crt']}    SpO2: {data['spo2']}    BP: {data['bp']}")
-    doc.add_paragraph(f"Doctor: {data['doctor']}    Paravet: {data['paravet']}")
+
+    doc.add_paragraph(f"\nTemp: {data['temp']}     CRT: {data['crt']}     Spo2: {data['spo2']}     BP: {data['bp']}")
+    doc.add_paragraph(f"Doctor: {data['doctor']}     Paravet: {data['paravet']}")
 
     buffer = BytesIO()
     doc.save(buffer)
     buffer.seek(0)
     return buffer
 
-st.title("IPD Treatment Sheet Generator")
+st.title("IPD Treatment Sheet Generator - Dr. Doodley Pet Hospital")
 
-with st.form("form"):
-    st.subheader("Basic Info")
+with st.form("ipd_form"):
     pet_name = st.text_input("Pet Name")
     pet_id = st.text_input("Pet ID")
-    date = st.date_input("Date", datetime.date.today())
-    time = st.time_input("Time")
+    date = st.date_input("Date")
+    time = st.time_input("Time of Treatment")
 
-    def input_rows(prefix, labels, include_billed=False):
-        arr = []
-        for i in range(len(labels)):
-            with st.expander(f"{prefix} #{i+1}"):
-                row = {}
-                for label in labels:
-                    row[label.lower()] = st.text_input(label, key=f"{prefix.lower()}_{label}_{i}")
-                if include_billed:
-                    row["billed"] = st.selectbox("Billed", ["Yes", "No"], key=f"{prefix.lower()}_billed_{i}")
-                arr.append(row)
-        return arr
+    injectables = []
+    st.subheader("Current Treatment - Injectables")
+    for i in range(1, 6):
+        with st.expander(f"Injectable {i}"):
+            name = st.text_input(f"Name {i}", key=f"inj_name_{i}")
+            route = st.text_input(f"Route {i}", key=f"inj_route_{i}")
+            ml = st.text_input(f"ml {i}", key=f"inj_ml_{i}")
+            dose = st.text_input(f"Dose {i}", key=f"inj_dose_{i}")
+            remarks = st.text_input(f"Remarks {i}", key=f"inj_remark_{i}")
+            billed = st.selectbox(f"Billed {i}", ["Yes", "No"], key=f"inj_billed_{i}")
+            if name:
+                injectables.append({"name": name, "route": route, "ml": ml, "dose": dose, "remarks": remarks, "billed": billed})
 
-    injectables = input_rows("Injectable", ["Name", "Route", "ml", "Dose", "Remarks"], include_billed=True)
-    oral_meds = input_rows("Oral Med", ["Name", "Dose", "Remarks"], include_billed=True)
-    food = input_rows("Food", ["Type of Food", "Quantity", "Remarks"])
-    emergency = input_rows("Emergency", ["Name", "Dose", "Remarks"], include_billed=True)
+    orals = []
+    st.subheader("Oral Medications")
+    for i in range(1, 4):
+        with st.expander(f"Oral Med {i}"):
+            name = st.text_input(f"Oral Name {i}", key=f"oral_name_{i}")
+            dose = st.text_input(f"Dose {i}", key=f"oral_dose_{i}")
+            remarks = st.text_input(f"Remarks {i}", key=f"oral_remarks_{i}")
+            billed = st.selectbox(f"Billed {i}", ["Yes", "No"], key=f"oral_billed_{i}")
+            if name:
+                orals.append({"name": name, "dose": dose, "remarks": remarks, "billed": billed})
 
-    st.subheader("Final Notes & Vitals")
-    remarks = st.text_area("General Remarks")
-    temp = st.text_input("Temperature")
+    food = []
+    st.subheader("Food Details")
+    for i in range(1, 3):
+        with st.expander(f"Food {i}"):
+            type_ = st.text_input(f"Type of Food {i}", key=f"food_type_{i}")
+            remarks = st.text_input(f"Remarks {i}", key=f"food_remark_{i}")
+            if type_:
+                food.append({"type": type_, "remarks": remarks})
+
+    st.subheader("Emergency / Remarks")
+    remarks = st.text_area("Remarks")
+
+    temp = st.text_input("Temp")
     crt = st.text_input("CRT")
-    spo2 = st.text_input("SpO2")
+    spo2 = st.text_input("Spo2")
     bp = st.text_input("BP")
-    doctor = st.text_input("Doctor")
-    paravet = st.text_input("Paravet")
 
-    submitted = st.form_submit_button("Generate & Download (.docx)")
+    doctor = st.selectbox("Doctor", ["Dr. Revathi", "Dr. Suhan", "Dr. Jyothi", "Dr. Jyothsna"])
+    paravet = st.selectbox("Paravet", ["YASHWANTH", "RAKESH", "ANIL", "PARTHA", "VINAY", "PRAMOD", "PRAJWAL", "DARSHAN", "MAHESH"])
+
+    submitted = st.form_submit_button("Generate Treatment Sheet")
 
 if submitted:
-    doc = create_treatment_sheet({
-        'pet_name': pet_name,
-        'pet_id': pet_id,
-        'date': date,
-        'time': time,
-        'injectables': [r for r in injectables if r.get("name")],
-        'oral_meds': [r for r in oral_meds if r.get("name")],
-        'food': [r for r in food if r.get("type of food")],
-        'emergency': [r for r in emergency if r.get("name")],
-        'remarks': remarks,
-        'temp': temp, 'crt': crt, 'spo2': spo2, 'bp': bp,
-        'doctor': doctor, 'paravet': paravet
+    docx_file = generate_ipd_case_sheet_docx({
+        "pet_name": pet_name,
+        "pet_id": pet_id,
+        "date": date,
+        "time": time,
+        "injectables": injectables,
+        "orals": orals,
+        "food": food,
+        "remarks": remarks,
+        "temp": temp,
+        "crt": crt,
+        "spo2": spo2,
+        "bp": bp,
+        "doctor": doctor,
+        "paravet": paravet
     })
-    st.success("✅ Treatment sheet ready!")
+
+    st.success("Treatment sheet generated successfully!")
+
     st.download_button(
-        "Download as Word (.docx)",
-        data=doc,
+        label="Download Treatment Sheet (Word)",
+        data=docx_file,
         file_name="Treatment_Sheet.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
